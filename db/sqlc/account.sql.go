@@ -9,23 +9,25 @@ import (
 	"context"
 )
 
-const createAuthor = `-- name: CreateAuthor :one
+const createAccount = `-- name: CreateAccount :one
 INSERT INTO accounts (
-  owner, balance, currency
+  owner, 
+  balance, 
+  currency
 ) VALUES (
   $1, $2, $3
 )
 RETURNING id, owner, balance, currency, created_at
 `
 
-type CreateAuthorParams struct {
+type CreateAccountParams struct {
 	Owner    string
 	Balance  int64
 	Currency string
 }
 
-func (q *Queries) CreateAuthor(ctx context.Context, arg CreateAuthorParams) (Account, error) {
-	row := q.db.QueryRowContext(ctx, createAuthor, arg.Owner, arg.Balance, arg.Currency)
+func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error) {
+	row := q.db.QueryRowContext(ctx, createAccount, arg.Owner, arg.Balance, arg.Currency)
 	var i Account
 	err := row.Scan(
 		&i.ID,
