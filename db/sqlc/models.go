@@ -12,7 +12,7 @@ import (
 type Account struct {
 	ID        int64
 	Owner     string
-	CurrencyBalance   int64
+	Balance   int64
 	Currency  string
 	CreatedAt time.Time
 }
